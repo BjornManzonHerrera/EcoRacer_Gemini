@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Clock, Zap, Trophy } from 'lucide-react';
-import { Challenge } from '@/contexts/GameContext';
+import type { Challenge } from '@/contexts/GameContext';
 
 interface ChallengeCardProps {
   challenge: Challenge;

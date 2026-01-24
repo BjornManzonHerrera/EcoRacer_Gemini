@@ -6,7 +6,7 @@ import { ProgressRing } from '@/components/ProgressRing';
 import { Link } from 'react-router';
 
 const Profile = () => {
-  const { user, stats, commuteLogs } = useGame();
+  const { user, stats, /*commuteLogs*/ } = useGame();
   const xpProgress = (stats.xp / stats.xpToNextLevel) * 100;
 
   return (

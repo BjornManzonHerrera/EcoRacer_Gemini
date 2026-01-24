@@ -1,174 +1,169 @@
-@import "tailwindcss";
-
-@plugin "@tailwindcss/typography";
-
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
-@custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* EcoLap Challenge Design System - Eco-Motorsports Theme */
+@layer base {
+  :root {
+    /* Core palette - Light mode */
+    --background: 150 30% 98%;
+    --foreground: 160 30% 10%;
 
-:root {
-  /* Core Racing Greens */
-  --background: 160 20% 4%;
-  --foreground: 160 20% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 10%;
 
-  --card: 160 18% 8%;
-  --card-foreground: 160 20% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 10%;
 
-  --popover: 160 18% 10%;
-  --popover-foreground: 160 20% 96%;
+    /* Primary - Emerald green */
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
 
-  /* Primary: Racing Green */
-  --primary: 152 82% 38%;
-  --primary-foreground: 160 20% 4%;
-  --primary-glow: 152 82% 48%;
+    /* Secondary - Soft gray-green */
+    --secondary: 150 20% 94%;
+    --secondary-foreground: 160 30% 15%;
 
-  /* Secondary: Electric Teal */
-  --secondary: 174 72% 40%;
-  --secondary-foreground: 160 20% 4%;
+    /* Muted tones */
+    --muted: 150 15% 92%;
+    --muted-foreground: 160 15% 45%;
 
-  /* Accent: Neon Lime */
-  --accent: 82 85% 55%;
-  --accent-foreground: 160 20% 4%;
+    /* Accent - Sky blue */
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
 
-  /* Muted */
-  --muted: 160 15% 15%;
-  --muted-foreground: 160 10% 55%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-  /* System */
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 98%;
+    --border: 150 20% 88%;
+    --input: 150 20% 88%;
+    --ring: 160 84% 39%;
 
-  --border: 160 20% 18%;
-  --input: 160 20% 15%;
-  --ring: 152 82% 38%;
+    --radius: 0.75rem;
 
-  --radius: 0.75rem;
+    /* Custom EcoLap colors */
+    --eco: 160 84% 39%;
+    --eco-light: 158 64% 90%;
+    --eco-dark: 160 84% 30%;
+    --accent-light: 199 89% 92%;
 
-  /* Racing Gradients */
-  --gradient-primary: linear-gradient(135deg, hsl(152, 82%, 38%) 0%, hsl(174, 72%, 40%) 100%);
-  --gradient-accent: linear-gradient(135deg, hsl(82, 85%, 55%) 0%, hsl(152, 82%, 48%) 100%);
-  --gradient-dark: linear-gradient(180deg, hsl(160, 20%, 6%) 0%, hsl(160, 18%, 3%) 100%);
-  --gradient-card: linear-gradient(135deg, hsl(160, 18%, 10%) 0%, hsl(160, 18%, 6%) 100%);
-  --gradient-glow: radial-gradient(ellipse at center, hsl(152, 82%, 38%, 0.15) 0%, transparent 70%);
+    /* Sidebar */
+    --sidebar-background: 150 30% 97%;
+    --sidebar-foreground: 160 30% 20%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 150 20% 94%;
+    --sidebar-accent-foreground: 160 30% 15%;
+    --sidebar-border: 150 20% 88%;
+    --sidebar-ring: 160 84% 39%;
+  }
 
-  /* Racing Shadows */
-  --shadow-glow: 0 0 40px hsl(152, 82%, 38%, 0.3);
-  --shadow-neon: 0 0 20px hsl(82, 85%, 55%, 0.4), 0 0 60px hsl(82, 85%, 55%, 0.2);
-  --shadow-card: 0 8px 32px hsl(0, 0%, 0%, 0.4);
-  --shadow-float: 0 20px 60px hsl(0, 0%, 0%, 0.5);
+  .dark {
+    /* Core Racing Greens */
+    --background: 160 20% 4%;
+    --foreground: 160 20% 96%;
 
-  /* Sidebar */
-  --sidebar-background: 160 18% 6%;
-  --sidebar-foreground: 160 20% 96%;
-  --sidebar-primary: 152 82% 38%;
-  --sidebar-primary-foreground: 160 20% 4%;
-  --sidebar-accent: 160 18% 12%;
-  --sidebar-accent-foreground: 160 20% 96%;
-  --sidebar-border: 160 20% 15%;
-  --sidebar-ring: 152 82% 38%;
+    --card: 160 18% 8%;
+    --card-foreground: 160 20% 96%;
 
-  /* Typography */
-  --font-display: 'Orbitron', sans-serif;
-  --font-body: 'Inter', sans-serif;
+    --popover: 160 18% 10%;
+    --popover-foreground: 160 20% 96%;
 
-  /* Track Colors */
-  --track-eco: 152 82% 38%;
-  --track-warning: 45 93% 47%;
-  --track-danger: 0 72% 51%;
-  --track-boost: 82 85% 55%;
+    /* Primary: Racing Green */
+    --primary: 152 82% 38%;
+    --primary-foreground: 160 20% 4%;
+    --primary-glow: 152 82% 48%;
+
+    /* Secondary: Electric Teal */
+    --secondary: 174 72% 40%;
+    --secondary-foreground: 160 20% 4%;
+
+    /* Accent: Neon Lime */
+    --accent: 82 85% 55%;
+    --accent-foreground: 160 20% 4%;
+
+    /* Muted */
+    --muted: 160 15% 15%;
+    --muted-foreground: 160 10% 55%;
+
+    /* System */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 160 20% 18%;
+    --input: 160 20% 15%;
+    --ring: 152 82% 38%;
+
+    /* Racing Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(152, 82%, 38%) 0%, hsl(174, 72%, 40%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(82, 85%, 55%) 0%, hsl(152, 82%, 48%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(160, 20%, 6%) 0%, hsl(160, 18%, 3%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(160, 18%, 10%) 0%, hsl(160, 18%, 6%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(152, 82%, 38%, 0.15) 0%, transparent 70%);
+
+    /* Racing Shadows */
+    --shadow-glow: 0 0 40px hsl(152, 82%, 38%, 0.3);
+    --shadow-neon: 0 0 20px hsl(82, 85%, 55%, 0.4), 0 0 60px hsl(82, 85%, 55%, 0.2);
+    --shadow-card: 0 8px 32px hsl(0, 0%, 0%, 0.4);
+    --shadow-float: 0 20px 60px hsl(0, 0%, 0%, 0.5);
+
+    /* Sidebar */
+    --sidebar-background: 160 18% 6%;
+    --sidebar-foreground: 160 20% 96%;
+    --sidebar-primary: 152 82% 38%;
+    --sidebar-primary-foreground: 160 20% 4%;
+    --sidebar-accent: 160 18% 12%;
+    --sidebar-accent-foreground: 160 20% 96%;
+    --sidebar-border: 160 20% 15%;
+    --sidebar-ring: 152 82% 38%;
+
+    /* Typography */
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Track Colors */
+    --track-eco: 152 82% 38%;
+    --track-warning: 45 93% 47%;
+    --track-danger: 0 72% 51%;
+    --track-boost: 82 85% 55%;
+  }
 }
 
-.dark {
-  /* Dark mode is the default for this racing theme */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--font-body);
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background: var(--gradient-dark);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-wide;
+  }
 }
 
-@theme {
-  /* ---------- Fonts ---------- */
-  --font-display: "Orbitron", sans-serif;
-  --font-body: "Inter", sans-serif;
-
-  /* ---------- Container ---------- */
-  --container-padding: 1rem;
-  --container-max-width-2xl: 1400px;
-
-  /* ---------- Colors ---------- */
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-primary-glow: hsl(var(--primary-glow));
-
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-
-  /* Sidebar */
-  --color-sidebar: hsl(var(--sidebar-background));
-  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
-  --color-sidebar-primary: hsl(var(--sidebar-primary));
-  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
-  --color-sidebar-accent: hsl(var(--sidebar-accent));
-  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
-  --color-sidebar-border: hsl(var(--sidebar-border));
-  --color-sidebar-ring: hsl(var(--sidebar-ring));
-
-  /* Track */
-  --color-track-eco: hsl(var(--track-eco));
-  --color-track-warning: hsl(var(--track-warning));
-  --color-track-danger: hsl(var(--track-danger));
-  --color-track-boost: hsl(var(--track-boost));
-
-  /* ---------- Radius ---------- */
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
-
-  /* ---------- Animations ---------- */
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-fade-in: fade-in 0.4s ease-out;
-  --animate-fade-out: fade-out 0.3s ease-out;
-  --animate-scale-in: scale-in 0.2s ease-out;
-  --animate-slide-up: slide-up 0.5s ease-out;
-  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
-  --animate-speed-line: speed-line 1s ease-in-out infinite;
-  --animate-counter: counter 0.4s ease-out;
-
-  /* ---------- Backgrounds ---------- */
-  --background-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-  --background-racing-stripe: repeating-linear-gradient(90deg,
-      transparent,
-      transparent 20px,
-      hsl(var(--primary) / 0.1) 20px,
-      hsl(var(--primary) / 0.1) 40px);
-  --background-checkered: repeating-conic-gradient(hsl(var(--muted)) 0% 25%,
-      transparent 0% 50%);
+@layer utilities {
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg;
+  }
+  
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-lg;
+  }
 }
-
-/* ============================
-   Keyframes (still CSS)
-   ============================ */
 
 @keyframes accordion-down {
   from {
@@ -276,39 +271,16 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
 
-  html {
-    font-family: var(--font-body);
-  }
 
-  body {
-    @apply bg-background text-foreground antialiased;
-    background: var(--gradient-dark);
-    min-height: 100vh;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-display);
-    @apply font-bold tracking-wide;
-  }
-}
-
-@utility racing-card {
-  @apply rounded-xl border border-border/50 p-6;
-  background: var(--gradient-card);
-  box-shadow: var(--shadow-card);
-}
 
 @layer components {
+  .racing-card {
+    @apply rounded-xl border border-border/50 p-6;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+  }
+
   .racing-card-glow {
     @apply racing-card relative overflow-hidden;
   }
@@ -338,7 +310,8 @@
 
   /* Racing Buttons */
   .btn-racing {
-    @apply relative overflow-hidden font-display font-bold uppercase tracking-widest;
+    @apply relative overflow-hidden font-bold uppercase tracking-widest;
+    font-family: var(--font-display);
     @apply px-8 py-4 rounded-lg;
     background: var(--gradient-primary);
     box-shadow: var(--shadow-glow);
@@ -396,7 +369,8 @@
   /* Stat Badge */
   .stat-badge {
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-full;
-    @apply text-sm font-display font-semibold uppercase tracking-wider;
+    @apply text-sm font-semibold uppercase tracking-wider;
+    font-family: var(--font-display);
     background: hsl(var(--muted));
     border: 1px solid hsl(var(--border));
   }

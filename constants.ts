@@ -1,4 +1,4 @@
-import { Challenge, LeaderboardEntry, SafeZone, UserStats } from "./types";
+import type { Challenge, LeaderboardEntry, SafeZone, UserStats } from "./types";
 
 export const MOCK_USER_STATS: UserStats = {
   totalPoints: 12450,

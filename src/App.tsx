@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 import { MobileNav } from "@/components/MobileNav";
+import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GameProvider } from "@/contexts/GameContext";
@@ -18,6 +19,7 @@ import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
 import { Onboarding } from "@/pages/Onboarding";
 import Login from "@/pages/Login";
+import CharacterCustomization from "@/pages/CharacterCustomization";
 
 const queryClient = new QueryClient();
 
@@ -56,13 +58,13 @@ const AppContent = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleNavigate = (screen: string) => {
+  /*const handleNavigate = (screen: string) => {
     if (screen === 'onboarding') {
       setCurrentScreen('onboarding');
     } else if (screen === 'app') {
       setCurrentScreen('app');
     }
-  };
+  };*/
 
   const handleOnboardingComplete = (userData: any) => {
     console.log("Onboarding completed:", userData);
@@ -79,7 +81,7 @@ const AppContent = () => {
 
   // Show Login screen
   if (currentScreen === 'login') {
-    return <Login onNavigate={handleNavigate} />;
+    return <Login />;
   }
 
   // Show Onboarding screen (without GameProvider)
@@ -98,6 +100,7 @@ const AppContent = () => {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/character-customization" element={<CharacterCustomization />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <MobileNav />
@@ -109,6 +112,7 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <Toaster />
       <Sonner />
       <BrowserRouter>
         <AppContent />

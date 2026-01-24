@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, type ReactNode, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -62,6 +62,7 @@ interface GameContextType {
   user: {
     name: string;
     avatar: string;
+    level: number;
   };
   stats: UserStats;
   selectedVehicle: VehicleType;
@@ -105,7 +106,7 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({ name: 'EcoRacer', avatar: '🌟' });
+  const [user, setUser] = useState({ name: 'EcoRacer', avatar: '🌟', level: 1 });
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>('bike');
   const [badges, setBadges] = useState<Badge[]>(badgeTemplates);
   const [challenges, setChallenges] = useState<Challenge[]>(challengeTemplates);
@@ -162,7 +163,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
         // Set user info
         setUser({
           name: data.name || 'EcoRacer',
-          avatar: getAvatarEmoji(data.avatar) || '🌟'
+          avatar: getAvatarEmoji(data.avatar) || '🌟',
+          level: data.level || 1,
         });
 
         // Set stats from Firestore

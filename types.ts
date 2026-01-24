@@ -1,17 +1,6 @@
-export enum ViewState {
-  DASHBOARD = 'DASHBOARD',
-  MAP_RACE = 'MAP_RACE',
-  LEADERBOARD = 'LEADERBOARD',
-  PROFILE = 'PROFILE',
-  AI_COACH = 'AI_COACH'
-}
+export type ViewState = 'DASHBOARD' | 'MAP_RACE' | 'LEADERBOARD' | 'PROFILE' | 'AI_COACH';
 
-export enum TransportMode {
-  WALK = 'WALK',
-  BIKE = 'BIKE',
-  EV = 'EV',
-  TRANSIT = 'TRANSIT'
-}
+export type TransportMode = 'WALK' | 'BIKE' | 'EV' | 'TRANSIT';
 
 export interface UserStats {
   totalPoints: number;

@@ -3,11 +3,11 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { db } from '../config/firebase';
 
-interface LoginProps {
+/*interface LoginProps {
   onNavigate: (screen: string) => void;
-}
+}*/
 
-export default function Login({ onNavigate }: LoginProps) {
+export default function Login(/*{ onNavigate }: LoginProps*/) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {

@@ -1,3 +1,4 @@
+/// <reference types="@types/google.maps" />
 import React, { useState, useEffect, useRef } from "react";
 import {
   Play,
@@ -9,17 +10,17 @@ import {
   MapPin,
   Navigation2,
 } from "lucide-react";
-import { TransportMode } from "../../types.ts";
+import type { TransportMode } from "../../types.ts";
 import { SAFE_ZONES } from "../../constants";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
 
-interface ImportMetaEnv {
+/*interface ImportMetaEnv {
   VITE_GOOGLE_API_KEY: string;
-}
+}*/
 
-interface ImportMeta {
+/*interface ImportMeta {
   env: ImportMetaEnv;
-}
+}*/
 
 setOptions({
   key: import.meta.env.VITE_GOOGLE_API_KEY,
@@ -111,7 +112,7 @@ const MapRaceView: React.FC = () => {
   const [isRacing, setIsRacing] = useState(false);
   const [speed, setSpeed] = useState(0);
   const [selectedMode, setSelectedMode] = useState<TransportMode>(
-    TransportMode.BIKE,
+    'BIKE',
   );
   const [elapsedTime, setElapsedTime] = useState(0);
   const [useFallback, setUseFallback] = useState(false);
@@ -130,7 +131,7 @@ const MapRaceView: React.FC = () => {
         setElapsedTime((prev) => prev + 1);
         setSpeed(
           Math.floor(Math.random() * 10) +
-            (selectedMode === TransportMode.EV ? 30 : 15),
+            (selectedMode === 'EV' ? 30 : 15),
         );
       }, 1000);
     } else {
@@ -408,14 +409,14 @@ const MapRaceView: React.FC = () => {
       {!isRacing && (
         <div className="absolute top-28 left-4 z-20 space-y-2 pointer-events-auto">
           {[
-            { mode: TransportMode.WALK, icon: Footprints },
-            { mode: TransportMode.BIKE, icon: Bike },
-            { mode: TransportMode.TRANSIT, icon: Bus },
-            { mode: TransportMode.EV, icon: Car },
+            { mode: 'WALK', icon: Footprints },
+            { mode: 'BIKE', icon: Bike },
+            { mode: 'TRANSIT', icon: Bus },
+            { mode: 'EV', icon: Car },
           ].map(({ mode, icon: Icon }) => (
             <button
               key={mode}
-              onClick={() => setSelectedMode(mode)}
+              onClick={() => setSelectedMode(mode as TransportMode)}
               className={`flex items-center gap-2 p-2 pr-4 rounded-full shadow-lg border transition-all ${
                 selectedMode === mode
                   ? "bg-blue-600 border-blue-400 text-white"
