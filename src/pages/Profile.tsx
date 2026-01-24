@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import { User, Settings, Share2, Leaf, Route, Zap, Trophy, ChevronRight } from 'lucide-react';
+import { User, Settings, Share2, Leaf, Route, Zap, Trophy, ChevronRight, PenSquare } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
 import { BadgeGrid } from '@/components/BadgeGrid';
 import { ProgressRing } from '@/components/ProgressRing';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { user, stats, /*commuteLogs*/ } = useGame();
@@ -59,13 +59,24 @@ const Profile = () => {
                 Level {stats.level}
               </span>
             </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 text-primary text-sm font-semibold"
-            >
-              <Share2 className="w-4 h-4" />
-              Share Profile
-            </motion.button>
+            <div className="flex items-center gap-4">
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 text-primary text-sm font-semibold"
+              >
+                <Share2 className="w-4 h-4" />
+                Share Profile
+              </motion.button>
+              <Link to="/character-customization">
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 text-secondary text-sm font-semibold"
+                >
+                  <PenSquare className="w-4 h-4" />
+                  Customize
+                </motion.button>
+              </Link>
+            </div>
           </div>
         </div>
       </motion.div>

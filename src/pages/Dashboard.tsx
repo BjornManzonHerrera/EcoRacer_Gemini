@@ -4,7 +4,7 @@ import { useGame } from "@/contexts/GameContext";
 import { StatCard } from "@/components/StatCard";
 import { ProgressRing } from "@/components/ProgressRing";
 import { VehicleSelector } from "@/components/VehicleSelector";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 const Index = () => {

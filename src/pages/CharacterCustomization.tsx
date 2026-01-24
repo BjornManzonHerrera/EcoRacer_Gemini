@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGame } from "@/contexts/GameContext";
 import CharacterPreview from "@/components/CharacterPreview";
 import ColorSwatch from "@/components/ColorSwatch";
 import GenderToggle from "@/components/GenderToggle";
@@ -30,35 +31,41 @@ const HELMET_COLORS = [
 ];
 
 const CharacterCustomization = () => {
-  const [gender, setGender] = useState<"boy" | "girl">("boy");
-  const [skinTone, setSkinTone] = useState(SKIN_TONES[2].color);
-  const [helmetColor, setHelmetColor] = useState(HELMET_COLORS[1].color);
+  const { user, saveCharacter } = useGame();
+  const [character, setCharacter] = useState({
+    gender: user.gender,
+    skinTone: user.skinTone,
+    helmetColor: user.helmetColor,
+  });
   const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    setCharacter({
+      gender: user.gender,
+      skinTone: user.skinTone,
+      helmetColor: user.helmetColor,
+    });
+  }, [user]);
+
 
   const handleRandomize = () => {
     const randomGender = Math.random() > 0.5 ? "boy" : "girl";
     const randomSkin = SKIN_TONES[Math.floor(Math.random() * SKIN_TONES.length)].color;
     const randomHelmet = HELMET_COLORS[Math.floor(Math.random() * HELMET_COLORS.length)].color;
     
-    setGender(randomGender);
-    setSkinTone(randomSkin);
-    setHelmetColor(randomHelmet);
+    setCharacter({
+      gender: randomGender,
+      skinTone: randomSkin,
+      helmetColor: randomHelmet,
+    });
     
     toast("🎲 Random character generated!", {
       duration: 2000,
     });
   };
 
-  const handleSave = () => {
-    const characterData = {
-      gender,
-      skinTone,
-      helmetColor,
-      savedAt: new Date().toISOString(),
-    };
-    
-    localStorage.setItem("ecolap-character", JSON.stringify(characterData));
-    console.log("Character saved:", characterData);
+  const handleSave = async () => {
+    await saveCharacter(character);
     
     setIsSaved(true);
     toast.success("Your eco-racer is ready! 🚴‍♂️", {
@@ -111,9 +118,9 @@ const CharacterCustomization = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-eco-light/30 to-accent-light/30 rounded-3xl blur-2xl" />
             <div className="relative bg-gradient-to-br from-eco-light/50 to-accent-light/50 rounded-3xl p-6 border border-border/30">
               <CharacterPreview
-                gender={gender}
-                skinTone={skinTone}
-                helmetColor={helmetColor}
+                gender={character.gender}
+                skinTone={character.skinTone}
+                helmetColor={character.helmetColor}
               />
             </div>
           </div>
@@ -130,7 +137,7 @@ const CharacterCustomization = () => {
               </svg>
             }
           >
-            <GenderToggle value={gender} onChange={setGender} />
+            <GenderToggle value={character.gender} onChange={(gender) => setCharacter(c => ({ ...c, gender }))} />
           </CustomizationSection>
 
           {/* Skin Tone */}
@@ -147,8 +154,8 @@ const CharacterCustomization = () => {
                 <ColorSwatch
                   key={tone.id}
                   color={tone.color}
-                  isSelected={skinTone === tone.color}
-                  onClick={() => setSkinTone(tone.color)}
+                  isSelected={character.skinTone === tone.color}
+                  onClick={() => setCharacter(c => ({ ...c, skinTone: tone.color }))}
                   label={tone.label}
                   size="lg"
                 />
@@ -170,8 +177,8 @@ const CharacterCustomization = () => {
                 <ColorSwatch
                   key={color.id}
                   color={color.color}
-                  isSelected={helmetColor === color.color}
-                  onClick={() => setHelmetColor(color.color)}
+                  isSelected={character.helmetColor === color.color}
+                  onClick={() => setCharacter(c => ({ ...c, helmetColor: color.color }))}
                   label={color.label}
                   size="md"
                 />
@@ -230,5 +237,6 @@ const CharacterCustomization = () => {
     </div>
   );
 };
+
 
 export default CharacterCustomization;

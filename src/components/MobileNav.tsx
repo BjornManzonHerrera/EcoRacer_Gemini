@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router-dom";
 import { Home, Map, Trophy, Target, User } from "lucide-react";
 import { motion } from "framer-motion";
 

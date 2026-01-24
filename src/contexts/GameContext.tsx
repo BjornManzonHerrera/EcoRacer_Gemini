@@ -63,6 +63,9 @@ interface GameContextType {
     name: string;
     avatar: string;
     level: number;
+    gender: 'boy' | 'girl';
+    skinTone: string;
+    helmetColor: string;
   };
   stats: UserStats;
   selectedVehicle: VehicleType;
@@ -76,6 +79,7 @@ interface GameContextType {
   logCommute: (commute: Omit<CommuteLog, 'id' | 'points'>) => void;
   completeChallenge: (challengeId: string) => void;
   refreshLeaderboard: () => Promise<void>;
+  saveCharacter: (character: { gender: 'boy' | 'girl'; skinTone: string; helmetColor: string }) => void;
 }
 
 // Static game data (keep hardcoded)
@@ -106,7 +110,14 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({ name: 'EcoRacer', avatar: '🌟', level: 1 });
+  const [user, setUser] = useState({
+    name: 'EcoRacer',
+    avatar: '🌟',
+    level: 1,
+    gender: 'boy' as 'boy' | 'girl',
+    skinTone: '#DEB887',
+    helmetColor: '#3B82F6',
+  });
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>('bike');
   const [badges, setBadges] = useState<Badge[]>(badgeTemplates);
   const [challenges, setChallenges] = useState<Challenge[]>(challengeTemplates);
@@ -165,6 +176,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
           name: data.name || 'EcoRacer',
           avatar: getAvatarEmoji(data.avatar) || '🌟',
           level: data.level || 1,
+          gender: data.gender || 'boy',
+          skinTone: data.skinTone || '#DEB887',
+          helmetColor: data.helmetColor || '#3B82F6',
         });
 
         // Set stats from Firestore
@@ -226,6 +240,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Error loading leaderboard:", error);
     }
+  };
+
+  const saveCharacter = async (character: { gender: 'boy' | 'girl'; skinTone: string; helmetColor: string }) => {
+    setUser(prev => ({
+      ...prev,
+      ...character,
+    }));
+    await saveUserData(character);
   };
 
   const saveUserData = async (updates: Partial<any>) => {
@@ -341,6 +363,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         logCommute,
         completeChallenge,
         refreshLeaderboard,
+        saveCharacter,
       }}
     >
       {children}
