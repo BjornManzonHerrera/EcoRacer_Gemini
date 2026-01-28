@@ -32,7 +32,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     { id: "ev", label: "Electric Car", image: "/assets/vehicles/car.png", ecoFactor: 0.8 },
     { id: "bike", label: "E-Bike", image: "/assets/vehicles/bike.png", ecoFactor: 0.95 },
     { id: "bus", label: "Electric Bus", image: "/assets/vehicles/e-bus.png", ecoFactor: 0.85 },
-    { id: "scooter", label: "E-Scooter", image: "/assets/vehicles/bike.png", ecoFactor: 0.9 },
+    { id: "scooter", label: "E-Scooter", image: "/assets/vehicles/scooter.png", ecoFactor: 0.9 },
   ];
 
   const handleComplete = async () => {

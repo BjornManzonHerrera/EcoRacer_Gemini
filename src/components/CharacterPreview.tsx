@@ -63,7 +63,7 @@ const CharacterPreview = ({ gender, skinTone, hairStyle }: CharacterPreviewProps
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: 0.2 }}
           style={{
-            transform: "translateY(-15%) scale(0.7)",
+            transform: `translateY(${gender === 'girl' ? '8%' : '0%'}) scale(0.65)`,
             transformOrigin: "top center"
           }}
         />
