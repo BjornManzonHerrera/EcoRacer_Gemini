@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { User, Settings, Share2, Leaf, Route, Zap, Trophy, ChevronRight, PenSquare } from 'lucide-react';
+import { User, Settings, Share2, ChevronRight, PenSquare } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
+import CharacterPreview from "@/components/CharacterPreview";
 import { BadgeGrid } from '@/components/BadgeGrid';
 import { ProgressRing } from '@/components/ProgressRing';
 import { Link } from 'react-router-dom';
@@ -43,8 +44,14 @@ const Profile = () => {
         <div className="flex items-center gap-6">
           <div className="relative">
             <ProgressRing progress={xpProgress} size={100}>
-              <div className="w-16 h-16 rounded-full bg-card border-2 border-primary flex items-center justify-center text-3xl">
-                {user.avatar}
+              <div className="w-16 h-16 rounded-full bg-card border-2 border-primary flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full transform scale-125 translate-y-1">
+                  <CharacterPreview
+                    gender={user.gender}
+                    skinTone={user.skinTone || 'pale'}
+                    hairStyle={user.hairStyle || 'short'}
+                  />
+                </div>
               </div>
             </ProgressRing>
           </div>
@@ -52,7 +59,7 @@ const Profile = () => {
             <h2 className="font-display font-bold text-2xl mb-1">{user.name}</h2>
             <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
               <span className="stat-badge">
-                <Trophy className="w-3 h-3 text-accent" />
+                <img src="/assets/icons/trophy.png" alt="Rank" className="w-3 h-3 object-contain mr-1" />
                 Rank #{stats.rank}
               </span>
               <span className="stat-badge">
@@ -89,28 +96,28 @@ const Profile = () => {
         className="grid grid-cols-2 gap-3 mb-6"
       >
         <div className="racing-card text-center">
-          <Leaf className="w-6 h-6 text-primary mx-auto mb-2" />
+          <img src="/assets/icons/leaf.png" alt="CO2" className="w-6 h-6 object-contain mx-auto mb-2" />
           <p className="font-display font-bold text-2xl text-gradient-primary">
             {stats.totalCarbonSaved.toFixed(1)}
           </p>
           <p className="text-xs text-muted-foreground">kg CO₂ Saved</p>
         </div>
         <div className="racing-card text-center">
-          <Route className="w-6 h-6 text-secondary mx-auto mb-2" />
+          <img src="/assets/vehicles/bike.png" alt="Distance" className="w-8 h-6 object-contain mx-auto mb-2" />
           <p className="font-display font-bold text-2xl text-secondary">
             {stats.totalDistance.toFixed(0)}
           </p>
           <p className="text-xs text-muted-foreground">km Traveled</p>
         </div>
         <div className="racing-card text-center">
-          <Zap className="w-6 h-6 text-accent mx-auto mb-2" />
+          <img src="/assets/icons/energy_bolt.png" alt="Points" className="w-6 h-6 object-contain mx-auto mb-2" />
           <p className="font-display font-bold text-2xl text-gradient-accent">
             {stats.totalPoints.toLocaleString()}
           </p>
           <p className="text-xs text-muted-foreground">Total Points</p>
         </div>
         <div className="racing-card text-center">
-          <Trophy className="w-6 h-6 text-primary mx-auto mb-2" />
+          <img src="/assets/icons/raceflag.png" alt="Commutes" className="w-6 h-6 object-contain mx-auto mb-2" />
           <p className="font-display font-bold text-2xl">
             {stats.totalCommutes}
           </p>

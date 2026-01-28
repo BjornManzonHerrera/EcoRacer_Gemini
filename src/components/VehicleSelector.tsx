@@ -23,7 +23,13 @@ export function VehicleSelector() {
             disabled={isLocked}
           >
             <div className="text-center">
-              <span className="text-3xl">{vehicle.icon}</span>
+              <div className="h-12 flex items-center justify-center mb-1">
+                <img
+                  src={vehicle.image}
+                  alt={vehicle.name}
+                  className="w-12 h-12 object-contain drop-shadow-md"
+                />
+              </div>
               <p className="mt-2 text-xs font-display font-semibold truncate">{vehicle.name}</p>
               <p className="text-xs text-muted-foreground mt-1">x{vehicle.ecoFactor}</p>
               {isLocked && (

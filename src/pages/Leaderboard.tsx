@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Trophy, Medal, Crown, TrendingUp } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
+import CharacterPreview from "@/components/CharacterPreview";
 
 const Leaderboard = () => {
   const { leaderboard, user, stats } = useGame();
@@ -32,7 +33,7 @@ const Leaderboard = () => {
         className="flex items-center gap-3 mb-6"
       >
         <div className="p-3 rounded-xl bg-primary/10">
-          <Trophy className="w-6 h-6 text-primary" />
+          <img src="/assets/icons/trophy.png" alt="Leaderboard" className="w-8 h-8 object-contain" />
         </div>
         <div>
           <h1 className="text-2xl font-display font-bold">Leaderboard</h1>
@@ -50,8 +51,14 @@ const Leaderboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-card border-2 border-primary flex items-center justify-center text-3xl animate-pulse-glow">
-                {user.avatar}
+              <div className="w-16 h-16 rounded-full bg-card border-2 border-primary flex items-center justify-center overflow-hidden animate-pulse-glow">
+                <div className="w-full h-full transform scale-125 translate-y-1">
+                  <CharacterPreview
+                    gender={user.gender}
+                    skinTone={user.skinTone || 'pale'}
+                    hairStyle={user.hairStyle || 'short'}
+                  />
+                </div>
               </div>
               <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-xs font-display font-bold rounded-full w-6 h-6 flex items-center justify-center">
                 #{stats.rank}
@@ -162,9 +169,8 @@ const Leaderboard = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 + index * 0.05 }}
-              className={`leaderboard-row ${getRankClass(racer.rank)} ${
-                racer.name === 'You' ? 'border-primary' : ''
-              }`}
+              className={`leaderboard-row ${getRankClass(racer.rank)} ${racer.name === 'You' ? 'border-primary' : ''
+                }`}
             >
               <div className="w-8 flex justify-center">
                 {getRankIcon(racer.rank)}

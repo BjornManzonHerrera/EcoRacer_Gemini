@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Zap, Leaf, Route, Flame, Trophy, ChevronRight, LogOut } from "lucide-react";
+import { Zap, Route, Flame, LogOut, ChevronRight } from "lucide-react";
 import { useGame } from "@/contexts/GameContext";
+import CharacterPreview from "@/components/CharacterPreview";
 import { StatCard } from "@/components/StatCard";
 import { ProgressRing } from "@/components/ProgressRing";
 import { VehicleSelector } from "@/components/VehicleSelector";
@@ -37,7 +38,7 @@ const Index = () => {
             {user.name}
           </h1>
         </div>
-        
+
         <div className="flex items-center gap-3">
           {/* Logout Button */}
           <motion.button
@@ -53,11 +54,17 @@ const Index = () => {
           <Link to="/profile" className="relative">
             <motion.div
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 rounded-full bg-card border-2 border-primary flex items-center justify-center text-2xl animate-pulse-glow"
+              className="w-14 h-14 rounded-full bg-card border-2 border-primary flex items-center justify-center overflow-hidden animate-pulse-glow"
             >
-              {user.avatar}
+              <div className="w-full h-full transform scale-125 translate-y-1">
+                <CharacterPreview
+                  gender={user.gender}
+                  skinTone={user.skinTone || 'pale'}
+                  hairStyle={user.hairStyle || 'short'}
+                />
+              </div>
             </motion.div>
-            <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-xs font-display font-bold rounded-full w-6 h-6 flex items-center justify-center">
+            <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-xs font-display font-bold rounded-full w-6 h-6 flex items-center justify-center z-10">
               {stats.level}
             </div>
           </Link>
@@ -82,7 +89,7 @@ const Index = () => {
           </ProgressRing>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <Trophy className="w-4 h-4 text-accent" />
+              <img src="/assets/icons/trophy.png" alt="Rank" className="w-4 h-4 object-contain" />
               <span className="text-sm text-muted-foreground">
                 Rank #{stats.rank}
               </span>
@@ -109,7 +116,7 @@ const Index = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3 mb-6">
         <StatCard
-          icon={Leaf}
+          image="/assets/icons/leaf.png"
           label="CO₂ Saved"
           value={stats.totalCarbonSaved.toFixed(1)}
           unit="kg"
@@ -130,7 +137,7 @@ const Index = () => {
           delay={0.3}
         />
         <StatCard
-          icon={Zap}
+          image="/assets/icons/raceflag.png"
           label="Best Lap"
           value={stats.bestLapTime.toFixed(1)}
           unit="s"

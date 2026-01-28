@@ -131,7 +131,7 @@ const MapRaceView: React.FC = () => {
         setElapsedTime((prev) => prev + 1);
         setSpeed(
           Math.floor(Math.random() * 10) +
-            (selectedMode === 'EV' ? 30 : 15),
+          (selectedMode === 'EV' ? 30 : 15),
         );
       }, 1000);
     } else {
@@ -276,7 +276,7 @@ const MapRaceView: React.FC = () => {
     return () => {
       isMounted = false;
       // Cleanup global handler
-      (window as any).gm_authFailure = () => {};
+      (window as any).gm_authFailure = () => { };
     };
   }, [useFallback]);
 
@@ -409,24 +409,23 @@ const MapRaceView: React.FC = () => {
       {!isRacing && (
         <div className="absolute top-28 left-4 z-20 space-y-2 pointer-events-auto">
           {[
-            { mode: 'WALK', icon: Footprints },
-            { mode: 'BIKE', icon: Bike },
-            { mode: 'TRANSIT', icon: Bus },
-            { mode: 'EV', icon: Car },
-          ].map(({ mode, icon: Icon }) => (
+            { mode: 'WALK', image: '/assets/vehicles/shoe.png' },
+            { mode: 'BIKE', image: '/assets/vehicles/bike.png' },
+            { mode: 'TRANSIT', image: '/assets/vehicles/e-bus.png' },
+            { mode: 'EV', image: '/assets/vehicles/car.png' },
+          ].map(({ mode, image }) => (
             <button
               key={mode}
               onClick={() => setSelectedMode(mode as TransportMode)}
-              className={`flex items-center gap-2 p-2 pr-4 rounded-full shadow-lg border transition-all ${
-                selectedMode === mode
+              className={`flex items-center gap-2 p-2 pr-4 rounded-full shadow-lg border transition-all ${selectedMode === mode
                   ? "bg-blue-600 border-blue-400 text-white"
                   : "bg-slate-800 border-slate-700 text-slate-400"
-              }`}
+                }`}
             >
               <div
                 className={`p-1 rounded-full ${selectedMode === mode ? "bg-white/20" : ""}`}
               >
-                <Icon size={16} />
+                <img src={image} alt={mode} className="w-5 h-5 object-contain" />
               </div>
               <span className="text-xs font-bold">{mode}</span>
             </button>
@@ -460,11 +459,10 @@ const MapRaceView: React.FC = () => {
 
           <button
             onClick={() => setIsRacing(!isRacing)}
-            className={`w-full py-4 rounded-xl font-black text-lg uppercase tracking-wide shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 ${
-              isRacing
+            className={`w-full py-4 rounded-xl font-black text-lg uppercase tracking-wide shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 ${isRacing
                 ? "bg-red-500 hover:bg-red-600 text-white"
                 : "bg-green-500 hover:bg-green-600 text-slate-900"
-            }`}
+              }`}
           >
             {isRacing ? (
               <>

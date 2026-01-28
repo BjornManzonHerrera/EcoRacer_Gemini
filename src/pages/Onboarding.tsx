@@ -22,26 +22,26 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modes = [
-    { id: "car", label: "Car", icon: Car, color: "bg-orange-500" },
-    { id: "bike", label: "Bike", icon: Bike, color: "bg-green-500" },
-    { id: "transit", label: "Public Transit", icon: Bus, color: "bg-blue-500" },
-    { id: "walk", label: "Walking", icon: Leaf, color: "bg-emerald-500" },
+    { id: "car", label: "Car", image: "/assets/vehicles/car.png", color: "bg-orange-500" },
+    { id: "bike", label: "Bike", image: "/assets/vehicles/bike.png", color: "bg-green-500" },
+    { id: "transit", label: "Public Transit", image: "/assets/vehicles/e-bus.png", color: "bg-blue-500" },
+    { id: "walk", label: "Walking", image: "/assets/vehicles/shoe.png", color: "bg-emerald-500" },
   ];
 
   const avatars = [
-    { id: "ev", label: "Electric Car", emoji: "⚡🚗", ecoFactor: 0.8 },
-    { id: "bike", label: "E-Bike", emoji: "🚴", ecoFactor: 0.95 },
-    { id: "bus", label: "Electric Bus", emoji: "🚌", ecoFactor: 0.85 },
-    { id: "scooter", label: "E-Scooter", emoji: "🛴", ecoFactor: 0.9 },
+    { id: "ev", label: "Electric Car", image: "/assets/vehicles/car.png", ecoFactor: 0.8 },
+    { id: "bike", label: "E-Bike", image: "/assets/vehicles/bike.png", ecoFactor: 0.95 },
+    { id: "bus", label: "Electric Bus", image: "/assets/vehicles/e-bus.png", ecoFactor: 0.85 },
+    { id: "scooter", label: "E-Scooter", image: "/assets/vehicles/bike.png", ecoFactor: 0.9 },
   ];
 
   const handleComplete = async () => {
     setIsSubmitting(true);
-    
+
     try {
       const auth = getAuth();
       const user = auth.currentUser;
-      
+
       if (!user) {
         console.error("No user logged in");
         setIsSubmitting(false);
@@ -59,9 +59,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       };
 
       await setDoc(doc(db, "mainUser", user.uid), userData);
-      
+
       console.log("User onboarding data saved:", userData);
-      
+
       // Call the onComplete callback if provided
       if (onComplete) {
         onComplete(userData);
@@ -157,26 +157,26 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
                 <div className="grid grid-cols-2 gap-4">
                   {modes.map((mode) => {
-                    const Icon = mode.icon;
+
                     return (
                       <motion.button
                         key={mode.id}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setSelectedMode(mode.id)}
-                        className={`rounded-lg border-2 p-6 transition-all ${
-                          selectedMode === mode.id
-                            ? "border-green-500 bg-green-500/10"
-                            : "border-slate-600 bg-slate-700"
-                        }`}
-                      >
-                        <Icon
-                          className={`mx-auto mb-2 h-12 w-12 ${
-                            selectedMode === mode.id
-                              ? "text-green-400"
-                              : "text-slate-400"
+                        className={`rounded-lg border-2 p-6 transition-all ${selectedMode === mode.id
+                          ? "border-green-500 bg-green-500/10"
+                          : "border-slate-600 bg-slate-700"
                           }`}
-                        />
+                      >
+                        <div className="h-16 flex items-center justify-center mb-2">
+                          <img
+                            src={mode.image}
+                            alt={mode.label}
+                            className={`h-12 w-auto object-contain ${selectedMode === mode.id ? "drop-shadow-lg scale-110" : "opacity-80 grayscale"
+                              }`}
+                          />
+                        </div>
                         <p className="text-sm text-white">{mode.label}</p>
                       </motion.button>
                     );
@@ -218,13 +218,18 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setSelectedAvatar(avatar.id)}
-                      className={`flex w-full items-center gap-4 rounded-lg border-2 p-4 transition-all ${
-                        selectedAvatar === avatar.id
-                          ? "border-green-500 bg-green-500/10"
-                          : "border-slate-600 bg-slate-700"
-                      }`}
+                      className={`flex w-full items-center gap-4 rounded-lg border-2 p-4 transition-all ${selectedAvatar === avatar.id
+                        ? "border-green-500 bg-green-500/10"
+                        : "border-slate-600 bg-slate-700"
+                        }`}
                     >
-                      <div className="text-4xl">{avatar.emoji}</div>
+                      <div className="h-10 w-10 flex items-center justify-center">
+                        <img
+                          src={avatar.image}
+                          alt={avatar.label}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
                       <div className="flex-1 text-left">
                         <p className="text-white">{avatar.label}</p>
                         <p className="text-sm text-slate-400">
@@ -330,9 +335,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           {[0, 1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className={`h-2 rounded-full transition-all ${
-                i === step ? "w-8 bg-green-500" : "w-2 bg-slate-600"
-              }`}
+              className={`h-2 rounded-full transition-all ${i === step ? "w-8 bg-green-500" : "w-2 bg-slate-600"
+                }`}
             />
           ))}
         </div>

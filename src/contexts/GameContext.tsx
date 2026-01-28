@@ -9,6 +9,7 @@ export interface Vehicle {
   id: VehicleType;
   name: string;
   icon: string;
+  image: string;
   ecoFactor: number;
   description: string;
   unlockLevel: number;
@@ -65,6 +66,8 @@ interface GameContextType {
     level: number;
     gender: 'boy' | 'girl';
     skinTone: string;
+    hairStyle: string;
+    // helmetColor is deprecated in favor of fixed asset
     helmetColor: string;
   };
   stats: UserStats;
@@ -79,16 +82,16 @@ interface GameContextType {
   logCommute: (commute: Omit<CommuteLog, 'id' | 'points'>) => void;
   completeChallenge: (challengeId: string) => void;
   refreshLeaderboard: () => Promise<void>;
-  saveCharacter: (character: { gender: 'boy' | 'girl'; skinTone: string; helmetColor: string }) => void;
+  saveCharacter: (character: { gender: 'boy' | 'girl'; skinTone: string; hairStyle: string }) => void;
 }
 
 // Static game data (keep hardcoded)
 const vehicles: Vehicle[] = [
-  { id: 'walk', name: 'Walking', icon: '🚶', ecoFactor: 2.0, description: 'Zero emissions, maximum eco points', unlockLevel: 1 },
-  { id: 'bike', name: 'Bicycle', icon: '🚲', ecoFactor: 1.8, description: 'Fast and eco-friendly', unlockLevel: 1 },
-  { id: 'scooter', name: 'E-Scooter', icon: '🛴', ecoFactor: 1.5, description: 'Electric mobility', unlockLevel: 3 },
-  { id: 'bus', name: 'Public Transit', icon: '🚌', ecoFactor: 1.3, description: 'Shared transportation', unlockLevel: 5 },
-  { id: 'electric_car', name: 'Electric Car', icon: '⚡', ecoFactor: 1.2, description: 'Premium electric racing', unlockLevel: 10 },
+  { id: 'walk', name: 'Walking', icon: '🚶', image: '/assets/vehicles/shoe.png', ecoFactor: 2.0, description: 'Zero emissions, maximum eco points', unlockLevel: 1 },
+  { id: 'bike', name: 'Bicycle', icon: '🚲', image: '/assets/vehicles/bike.png', ecoFactor: 1.8, description: 'Fast and eco-friendly', unlockLevel: 1 },
+  { id: 'scooter', name: 'E-Scooter', icon: '🛴', image: '/assets/vehicles/bike.png', ecoFactor: 1.5, description: 'Electric mobility', unlockLevel: 3 }, // Fallback to bike for scooter if no asset
+  { id: 'bus', name: 'Public Transit', icon: '🚌', image: '/assets/vehicles/e-bus.png', ecoFactor: 1.3, description: 'Shared transportation', unlockLevel: 5 },
+  { id: 'electric_car', name: 'Electric Car', icon: '⚡', image: '/assets/vehicles/car.png', ecoFactor: 1.2, description: 'Premium electric racing', unlockLevel: 10 },
 ];
 
 const badgeTemplates: Badge[] = [
@@ -115,15 +118,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
     avatar: '🌟',
     level: 1,
     gender: 'boy' as 'boy' | 'girl',
-    skinTone: '#DEB887',
-    helmetColor: '#3B82F6',
+    skinTone: 'pale',
+    hairStyle: 'short',
+    helmetColor: '', // deprecated
   });
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType>('bike');
   const [badges, setBadges] = useState<Badge[]>(badgeTemplates);
   const [challenges, setChallenges] = useState<Challenge[]>(challengeTemplates);
   const [commuteLogs, setCommuteLogs] = useState<CommuteLog[]>([]);
   const [leaderboard, setLeaderboard] = useState<{ name: string; points: number; rank: number; avatar: string }[]>([]);
-  
+
   const [stats, setStats] = useState<UserStats>({
     totalPoints: 0,
     level: 1,
@@ -152,7 +156,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   // Load user data from Firestore
   useEffect(() => {
     const auth = getAuth();
-    
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         await loadUserData(firebaseUser.uid);
@@ -167,18 +171,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const loadUserData = async (uid: string) => {
     try {
       const userDoc = await getDoc(doc(db, "mainUser", uid));
-      
+
       if (userDoc.exists()) {
         const data = userDoc.data();
-        
+
         // Set user info
         setUser({
           name: data.name || 'EcoRacer',
           avatar: getAvatarEmoji(data.avatar) || '🌟',
           level: data.level || 1,
           gender: data.gender || 'boy',
-          skinTone: data.skinTone || '#DEB887',
-          helmetColor: data.helmetColor || '#3B82F6',
+          skinTone: data.skinTone || 'pale',
+          hairStyle: data.hairStyle || 'short',
+          helmetColor: '',
         });
 
         // Set stats from Firestore
@@ -224,7 +229,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       const leaderboardData: any[] = [];
       let rank = 1;
-      
+
       querySnapshot.forEach((docSnap) => {
         const userData = docSnap.data();
         leaderboardData.push({
@@ -242,10 +247,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const saveCharacter = async (character: { gender: 'boy' | 'girl'; skinTone: string; helmetColor: string }) => {
+  const saveCharacter = async (character: { gender: 'boy' | 'girl'; skinTone: string; hairStyle: string }) => {
+    // Generate avatar string for emoji compatibility if needed, or update to use image URL
+    // For now we keep the emoji logic or update it separately, but we save the detailed customization
+
     setUser(prev => ({
       ...prev,
       ...character,
+      helmetColor: '',
     }));
     await saveUserData(character);
   };
@@ -253,7 +262,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const saveUserData = async (updates: Partial<any>) => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
-    
+
     if (!currentUser) return;
 
     try {
@@ -290,7 +299,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const logCommute = useCallback(async (commute: Omit<CommuteLog, 'id' | 'points'>) => {
     const vehicle = vehicles.find(v => v.id === commute.mode);
     const points = Math.floor(commute.distance * (vehicle?.ecoFactor || 1) * 10);
-    
+
     const newLog: CommuteLog = {
       ...commute,
       id: Date.now().toString(),
@@ -299,7 +308,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     setCommuteLogs(prev => [newLog, ...prev]);
     addPoints(points);
-    
+
     setStats(prev => {
       const newStats = {
         ...prev,
@@ -320,7 +329,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const completeChallenge = useCallback(async (challengeId: string) => {
     setChallenges(prev => {
-      const updated = prev.map(c => 
+      const updated = prev.map(c =>
         c.id === challengeId ? { ...c, current: c.target } : c
       );
 

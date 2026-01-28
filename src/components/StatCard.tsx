@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  image?: string;
   label: string;
   value: string | number;
   unit?: string;
@@ -10,7 +11,7 @@ interface StatCardProps {
   gradient?: boolean;
 }
 
-export function StatCard({ icon: Icon, label, value, unit, delay = 0, gradient = false }: StatCardProps) {
+export function StatCard({ icon: Icon, image, label, value, unit, delay = 0, gradient = false }: StatCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -20,7 +21,11 @@ export function StatCard({ icon: Icon, label, value, unit, delay = 0, gradient =
     >
       <div className="flex items-center gap-3">
         <div className="p-2 rounded-lg bg-primary/10">
-          <Icon className="w-5 h-5 text-primary" />
+          {image ? (
+            <img src={image} alt={label} className="w-5 h-5 object-contain" />
+          ) : (
+            Icon && <Icon className="w-5 h-5 text-primary" />
+          )}
         </div>
         <div>
           <p className="text-xs text-muted-foreground uppercase tracking-wider">{label}</p>
