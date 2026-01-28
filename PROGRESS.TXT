@@ -1,0 +1,58 @@
+✦ All build errors related to Tailwind CSS have
+  been resolved, and the project builds
+  successfully. This indicates a successful
+  rollback to Tailwind CSS v3 and correction of
+  all associated configuration and syntax issues.
+  The final step is to save this progress in
+  PROGRESS.TXT.
+  
+  Done.
+  
+  ## Progress Log
+  
+  **2026-01-24:**
+  
+  *   **Uninstalled Tailwind CSS v4 packages:** Removed `@tailwindcss/vite`, `@tailwindcss/postcss`, and `tailwindcss` (v4) from `package.json`.
+  *   **Installed Tailwind CSS v3:** Installed `tailwindcss@^3.4.1`.
+  *   **Updated `postcss.config.js`:** Changed `postcss.config.js` to use `tailwindcss` instead of `@tailwindcss/postcss`.
+  *   **Restored `*` selector in `src/index.css`:** Re-inserted the universal selector block inside `@layer base`.
+  *   **Fixed `font-display` in `.btn-racing`:** Replaced `@apply font-display` with `font-family: var(--font-display);` in `.btn-racing` in `src/index.css`.
+  *   **Fixed `font-display` in `.stat-badge`:** Replaced `@apply font-display` with `font-family: var(--font-display);` in `.stat-badge` in `src/index.css`.
+  *   **Fixed `justify-.around` typo:** Corrected `justify-.around` to `justify-around` in `.mobile-nav` in `src/index.css`.
+  *   **Moved `@import` statement:** Moved the Google Fonts `@import` statement to the top of `src/index.css` to comply with PostCSS rules and remove the build warning.
+  *   **Successful Build:** The project now builds without errors or critical warnings, confirming the successful rollback to Tailwind CSS v3 and the resolution of all identified issues.
+  
+  
+  
+  ## Next Steps
+  
+  The build is now clean. The next step would typically involve:
+  
+  1.  **Testing the application:** Run the application locally to ensure all UI elements and functionalities that rely on Tailwind CSS are rendering correctly.
+  2.  **Addressing chunk size warning (optional):** Investigate and implement strategies to reduce the JavaScript chunk sizes if performance is a concern (e.g., dynamic imports, manual chunking).
+  3.  **Further development:** Continue with the next planned feature or bug fix.
+  
+  **2026-01-24 (Afternoon):**
+  
+  *   **Integrated Character Customization with `GameContext`:**
+      *   Extended the `GameContextType` and `user` state in `GameContext.tsx` to include `gender`, `skinTone`, and `helmetColor`.
+      *   Updated the `loadUserData` function to fetch these new properties from Firestore.
+      *   Added a `saveCharacter` function to persist the customization data.
+  *   **Refactored `CharacterCustomization.tsx`:**
+      *   Replaced local `useState` with the `useGame` hook to manage character appearance.
+      *   Updated the component to use the `character` state object for UI elements.
+      *   Modified the `handleSave` function to call the `saveCharacter` function from the context.
+  *   **Added Navigation to Character Customization:**
+      *   Added a "Customize" button to the `Profile.tsx` page to provide a clear navigation path to the character customization screen.
+  *   **Resolved `react-router` version conflict:**
+      *   Uninstalled `react-router` v7 and installed `react-router` v6.30.1 to match `react-router-dom`.
+      *   Updated all import statements to use `react-router-dom` for routing components.
+  *   **Successful Build:** The project builds successfully with all previous issues resolved.
+  
+  ## Next Steps
+  
+  1.  **Run the application locally (`npm run dev`)** to ensure all UI elements and functionalities are rendering correctly and that the "white screen" on the Profile page is resolved.
+  2.  **Verify Character Customization:** Navigate to the Profile page, click "Customize", and ensure the character customization options are working as expected. Save changes and verify they persist.
+  3.  **Address chunk size warning (optional):** Investigate and implement strategies to reduce the JavaScript chunk sizes if performance is a concern.
+  4.  **Further development:** Continue with the next planned feature or bug fix.
+  

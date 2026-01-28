@@ -2,63 +2,49 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGame } from "@/contexts/GameContext";
 import CharacterPreview from "@/components/CharacterPreview";
-import ColorSwatch from "@/components/ColorSwatch";
-import GenderToggle from "@/components/GenderToggle";
 import CustomizationSection from "@/components/CustomizationSection";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const SKIN_TONES = [
-  { id: "light", color: "#FFE4C4", label: "Light" },
-  { id: "medium-light", color: "#F5DEB3", label: "Medium Light" },
-  { id: "medium", color: "#DEB887", label: "Medium" },
-  { id: "medium-dark", color: "#CD853F", label: "Medium Dark" },
-  { id: "dark", color: "#8B4513", label: "Dark" },
-  { id: "very-dark", color: "#5D3A1A", label: "Very Dark" },
+  { id: "pale", label: "Pale" },
+  { id: "light-brown", label: "Light Brown" },
+  { id: "brown", label: "Brown" },
 ];
 
-const HELMET_COLORS = [
-  { id: "red", color: "#EF4444", label: "Red" },
-  { id: "blue", color: "#3B82F6", label: "Blue" },
-  { id: "green", color: "#10B981", label: "Green" },
-  { id: "yellow", color: "#F59E0B", label: "Yellow" },
-  { id: "purple", color: "#8B5CF6", label: "Purple" },
-  { id: "orange", color: "#F97316", label: "Orange" },
-  { id: "pink", color: "#EC4899", label: "Pink" },
-  { id: "black", color: "#1F2937", label: "Black" },
-  { id: "white", color: "#FFFFFF", label: "White" },
-  { id: "silver", color: "#9CA3AF", label: "Silver" },
+const HAIR_STYLES = [
+  { id: "short", label: "Short Hair" },
+  { id: "long", label: "Long Hair" },
 ];
 
 const CharacterCustomization = () => {
   const { user, saveCharacter } = useGame();
   const [character, setCharacter] = useState({
     gender: user.gender,
-    skinTone: user.skinTone,
-    helmetColor: user.helmetColor,
+    skinTone: user.skinTone || "pale",
+    hairStyle: user.hairStyle || "short",
   });
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     setCharacter({
       gender: user.gender,
-      skinTone: user.skinTone,
-      helmetColor: user.helmetColor,
+      skinTone: user.skinTone || "pale",
+      hairStyle: user.hairStyle || "short",
     });
   }, [user]);
 
-
   const handleRandomize = () => {
     const randomGender = Math.random() > 0.5 ? "boy" : "girl";
-    const randomSkin = SKIN_TONES[Math.floor(Math.random() * SKIN_TONES.length)].color;
-    const randomHelmet = HELMET_COLORS[Math.floor(Math.random() * HELMET_COLORS.length)].color;
-    
+    const randomSkin = SKIN_TONES[Math.floor(Math.random() * SKIN_TONES.length)].id;
+    const randomHair = HAIR_STYLES[Math.floor(Math.random() * HAIR_STYLES.length)].id;
+
     setCharacter({
       gender: randomGender,
       skinTone: randomSkin,
-      helmetColor: randomHelmet,
+      hairStyle: randomHair,
     });
-    
+
     toast("🎲 Random character generated!", {
       duration: 2000,
     });
@@ -66,20 +52,34 @@ const CharacterCustomization = () => {
 
   const handleSave = async () => {
     await saveCharacter(character);
-    
+
     setIsSaved(true);
     toast.success("Your eco-racer is ready! 🚴‍♂️", {
       description: "Character saved successfully",
       duration: 3000,
     });
-    
+
     setTimeout(() => setIsSaved(false), 2000);
+  };
+
+  // Get preview images for skin tone selection
+  const getSkinPreviewImage = (skinId: string) => {
+    const prefix = character.gender === "boy" ? "male" : "female";
+    const basePath = character.gender === "boy" ? "/assets/avatar/male" : "/assets/avatar";
+    return `${basePath}/${prefix}-${skinId}.png`;
+  };
+
+  // Get preview images for hair style selection
+  const getHairPreviewImage = (hairId: string) => {
+    const prefix = character.gender === "boy" ? "male" : "female";
+    const basePath = character.gender === "boy" ? "/assets/avatar/male" : "/assets/avatar";
+    return `${basePath}/${prefix}-${hairId}-hair.png`;
   };
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header 
+      <motion.header
         className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b border-border/50"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -108,7 +108,7 @@ const CharacterCustomization = () => {
       {/* Main content */}
       <main className="container max-w-md mx-auto px-4 py-6 pb-32">
         {/* Character Preview */}
-        <motion.div 
+        <motion.div
           className="mb-8"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -120,7 +120,7 @@ const CharacterCustomization = () => {
               <CharacterPreview
                 gender={character.gender}
                 skinTone={character.skinTone}
-                helmetColor={character.helmetColor}
+                hairStyle={character.hairStyle}
               />
             </div>
           </div>
@@ -137,7 +137,26 @@ const CharacterCustomization = () => {
               </svg>
             }
           >
-            <GenderToggle value={character.gender} onChange={(gender) => setCharacter(c => ({ ...c, gender }))} />
+            <div className="flex gap-3 justify-center">
+              {[
+                { id: "boy", label: "Male", emoji: "👦" },
+                { id: "girl", label: "Female", emoji: "👧" },
+              ].map((option) => (
+                <motion.button
+                  key={option.id}
+                  onClick={() => setCharacter(c => ({ ...c, gender: option.id as "boy" | "girl" }))}
+                  className={`flex-1 p-4 rounded-xl border-2 transition-all ${character.gender === option.id
+                      ? "border-primary bg-primary/10"
+                      : "border-border bg-card hover:border-primary/50"
+                    }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="text-2xl mb-2 block">{option.emoji}</span>
+                  <span className="text-sm font-medium">{option.label}</span>
+                </motion.button>
+              ))}
+            </div>
           </CustomizationSection>
 
           {/* Skin Tone */}
@@ -149,39 +168,80 @@ const CharacterCustomization = () => {
               </svg>
             }
           >
-            <div className="flex flex-wrap gap-3 justify-center">
+            <div className="flex gap-3 justify-center">
               {SKIN_TONES.map((tone) => (
-                <ColorSwatch
+                <motion.button
                   key={tone.id}
-                  color={tone.color}
-                  isSelected={character.skinTone === tone.color}
-                  onClick={() => setCharacter(c => ({ ...c, skinTone: tone.color }))}
-                  label={tone.label}
-                  size="lg"
-                />
+                  onClick={() => setCharacter(c => ({ ...c, skinTone: tone.id }))}
+                  className={`relative w-20 h-20 rounded-xl border-2 overflow-hidden transition-all ${character.skinTone === tone.id
+                      ? "border-primary ring-2 ring-primary/30"
+                      : "border-border hover:border-primary/50"
+                    }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img
+                    src={getSkinPreviewImage(tone.id)}
+                    alt={tone.label}
+                    className="w-full h-full object-cover object-top"
+                  />
+                  {character.skinTone === tone.id && (
+                    <motion.div
+                      className="absolute inset-0 bg-primary/20 flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </motion.div>
+                  )}
+                </motion.button>
               ))}
             </div>
           </CustomizationSection>
 
-          {/* Helmet Color */}
+          {/* Hair Style */}
           <CustomizationSection
-            title="Helmet Color"
+            title="Hair Style"
             icon={
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             }
           >
-            <div className="flex flex-wrap gap-3 justify-center">
-              {HELMET_COLORS.map((color) => (
-                <ColorSwatch
-                  key={color.id}
-                  color={color.color}
-                  isSelected={character.helmetColor === color.color}
-                  onClick={() => setCharacter(c => ({ ...c, helmetColor: color.color }))}
-                  label={color.label}
-                  size="md"
-                />
+            <div className="flex gap-3 justify-center">
+              {HAIR_STYLES.map((style) => (
+                <motion.button
+                  key={style.id}
+                  onClick={() => setCharacter(c => ({ ...c, hairStyle: style.id }))}
+                  className={`relative w-24 h-24 rounded-xl border-2 overflow-hidden transition-all ${character.hairStyle === style.id
+                      ? "border-primary ring-2 ring-primary/30"
+                      : "border-border hover:border-primary/50"
+                    }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img
+                    src={getHairPreviewImage(style.id)}
+                    alt={style.label}
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 py-1">
+                    <span className="text-xs text-white">{style.label}</span>
+                  </div>
+                  {character.hairStyle === style.id && (
+                    <motion.div
+                      className="absolute top-1 right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                    >
+                      <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </motion.div>
+                  )}
+                </motion.button>
               ))}
             </div>
           </CustomizationSection>
@@ -189,7 +249,7 @@ const CharacterCustomization = () => {
       </main>
 
       {/* Fixed bottom button */}
-      <motion.div 
+      <motion.div
         className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-lg border-t border-border/50"
         initial={{ y: 100 }}
         animate={{ y: 0 }}

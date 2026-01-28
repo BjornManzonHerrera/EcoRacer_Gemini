@@ -59,73 +59,74 @@
   }
 
   .dark {
-    /* Core Racing Greens */
-    --background: 160 20% 4%;
-    --foreground: 160 20% 96%;
+    /* Core Background - Very dark with subtle green tint */
+    --background: 160 25% 3%;
+    --foreground: 150 15% 95%;
 
-    --card: 160 18% 8%;
-    --card-foreground: 160 20% 96%;
+    /* Card - Dark green-tinted panels */
+    --card: 160 22% 5%;
+    --card-foreground: 150 15% 95%;
 
-    --popover: 160 18% 10%;
-    --popover-foreground: 160 20% 96%;
+    --popover: 160 22% 6%;
+    --popover-foreground: 150 15% 95%;
 
-    /* Primary: Racing Green */
-    --primary: 152 82% 38%;
-    --primary-foreground: 160 20% 4%;
-    --primary-glow: 152 82% 48%;
+    /* Primary: Bright Neon Green */
+    --primary: 145 100% 50%;
+    --primary-foreground: 160 25% 3%;
+    --primary-glow: 145 100% 55%;
 
-    /* Secondary: Electric Teal */
-    --secondary: 174 72% 40%;
-    --secondary-foreground: 160 20% 4%;
+    /* Secondary: Electric Cyan */
+    --secondary: 185 100% 50%;
+    --secondary-foreground: 160 25% 3%;
 
-    /* Accent: Neon Lime */
-    --accent: 82 85% 55%;
-    --accent-foreground: 160 20% 4%;
+    /* Accent: Match Primary Neon Green */
+    --accent: 145 100% 50%;
+    --accent-foreground: 160 25% 3%;
 
     /* Muted */
-    --muted: 160 15% 15%;
-    --muted-foreground: 160 10% 55%;
+    --muted: 160 18% 10%;
+    --muted-foreground: 150 12% 50%;
 
     /* System */
-    --destructive: 0 72% 51%;
+    --destructive: 0 80% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 160 20% 18%;
-    --input: 160 20% 15%;
-    --ring: 152 82% 38%;
+    --border: 150 30% 12%;
+    --input: 160 20% 8%;
+    --ring: 145 100% 50%;
 
     /* Racing Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(152, 82%, 38%) 0%, hsl(174, 72%, 40%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(82, 85%, 55%) 0%, hsl(152, 82%, 48%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(160, 20%, 6%) 0%, hsl(160, 18%, 3%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(160, 18%, 10%) 0%, hsl(160, 18%, 6%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsl(152, 82%, 38%, 0.15) 0%, transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(145, 100%, 50%) 0%, hsl(185, 100%, 50%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(185, 100%, 50%) 0%, hsl(145, 100%, 50%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(160, 25%, 4%) 0%, hsl(160, 25%, 2%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(160, 22%, 7%) 0%, hsl(160, 22%, 4%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(145, 100%, 50%, 0.12) 0%, transparent 70%);
 
     /* Racing Shadows */
-    --shadow-glow: 0 0 40px hsl(152, 82%, 38%, 0.3);
-    --shadow-neon: 0 0 20px hsl(82, 85%, 55%, 0.4), 0 0 60px hsl(82, 85%, 55%, 0.2);
-    --shadow-card: 0 8px 32px hsl(0, 0%, 0%, 0.4);
-    --shadow-float: 0 20px 60px hsl(0, 0%, 0%, 0.5);
+    --shadow-glow: 0 0 40px hsl(145, 100%, 50%, 0.35);
+    --shadow-neon: 0 0 20px hsl(145, 100%, 50%, 0.5), 0 0 60px hsl(145, 100%, 50%, 0.25);
+    --shadow-card: 0 8px 32px hsl(0, 0%, 0%, 0.5);
+    --shadow-float: 0 20px 60px hsl(0, 0%, 0%, 0.6);
 
     /* Sidebar */
-    --sidebar-background: 160 18% 6%;
-    --sidebar-foreground: 160 20% 96%;
-    --sidebar-primary: 152 82% 38%;
-    --sidebar-primary-foreground: 160 20% 4%;
-    --sidebar-accent: 160 18% 12%;
-    --sidebar-accent-foreground: 160 20% 96%;
-    --sidebar-border: 160 20% 15%;
-    --sidebar-ring: 152 82% 38%;
+    --sidebar-background: 160 22% 4%;
+    --sidebar-foreground: 150 15% 95%;
+    --sidebar-primary: 145 100% 50%;
+    --sidebar-primary-foreground: 160 25% 3%;
+    --sidebar-accent: 160 20% 8%;
+    --sidebar-accent-foreground: 150 15% 95%;
+    --sidebar-border: 150 30% 12%;
+    --sidebar-ring: 145 100% 50%;
 
     /* Typography */
     --font-display: 'Orbitron', sans-serif;
     --font-body: 'Inter', sans-serif;
 
     /* Track Colors */
-    --track-eco: 152 82% 38%;
-    --track-warning: 45 93% 47%;
-    --track-danger: 0 72% 51%;
-    --track-boost: 82 85% 55%;
+    --track-eco: 145 100% 50%;
+    --track-warning: 45 100% 50%;
+    --track-danger: 0 80% 55%;
+    --track-boost: 185 100% 50%;
   }
 }
 

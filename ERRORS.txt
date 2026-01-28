@@ -1,34 +1,15 @@
-PS C:\Users\PC\Desktop\EcoRacer\ecoracer-app> npm run build
+Uncaught TypeError: Cannot destructure property 'basename' of 'React2.useContext(...)' as it is null.
+    at LinkWithRef (react-router-dom.js?v=5666c3e3:5405:5)
+    at Object.react_stack_bottom_frame (react-dom_client.js?v=5666c3e3:18509:20)
+    at renderWithHooks (react-dom_client.js?v=5666c3e3:5654:24)
+    at updateForwardRef (react-dom_client.js?v=5666c3e3:7198:21)
+    at beginWork (react-dom_client.js?v=5666c3e3:8735:20)
+    at runWithFiberInDEV (react-dom_client.js?v=5666c3e3:997:72)
+    at performUnitOfWork (react-dom_client.js?v=5666c3e3:12561:98)
+    at workLoopSync (react-dom_client.js?v=5666c3e3:12424:43)
+    at renderRootSync (react-dom_client.js?v=5666c3e3:12408:13)
+    at performWorkOnRoot (react-dom_client.js?v=5666c3e3:11827:37)Understand this error
+react-dom_client.js?v=5666c3e3:6966 An error occurred in the <Link> component.
 
-> eco-lap-challenge@0.0.0 build
-> tsc -b && vite build
-
-vite v7.3.1 building client environment for production...
-✓ 3 modules transformed.
-✗ Build failed in 314ms
-error during build:
-[@tailwindcss/vite:generate:build] Cannot apply unknown utility class `border-border`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
-file: C:/Users/PC/Desktop/EcoRacer/ecoracer-app/src/index.css
-    at onInvalidCandidate (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:21:1314)
-    at Ce (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modul-app/ailwindcss/dist/chunk-CT46QCH7.mjs:16:36652)
-node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:16:3665/node_modules/t2)   indcss/dist/chunk-CT46QCH7.mjs:21:355
-    at file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app-app/node_modul/nodeailwindcss/dist/chunk-CT46QCH7.mjs:3:1718)
-_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:21:355     app/node_module
-    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/t Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modulnode_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:1718)     t Wi (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modul    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/nt async Za (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/nodeode_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:1377)      t async rf (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/t async lu (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-    \Users\PC\Desktop\EcoRacer\ecoracer-app>
-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:17app/
-18)
-    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-a   at async Za (file:///C:/Users/PC/Desktop/EcoRacer/ecpp/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:137-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:37)
-    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-   at async rf (file:///C:/Users/PC/Desktop/EcoRacer/ecapp/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:21:1-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecoracert Wi (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mer/ecjs:3:ode_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:38:1718)                                              :10:3
-    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-t async Za (file:///C:/Users/PC/Desktop/EcoRacer/ecapp/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:1-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.m377)
-    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoracert async rf (file:///C:/Users/PC/Desktop/EcoRacer/ec-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:21-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.m    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecoraceat Wi (file:///C:/Users/PC/Desktop/EcoRacer/ecor-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.er/ecmjs:/node_modules/tailwindcss/dist/chunk-CT46QCH7.m3:1718)                                            .mjs:
-    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecoracerat async Za (file:///C:/Users/PC/Desktop/EcoRac-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3er-app/node_modules/tailwindcss/dist/chunk-CT46:1377)
-    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoraceat async rf (file:///C:/Users/PC/Desktop/EcoRacr-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:er-app/node_modules/tailwindcss/dist/chunk-CT46    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecorac at Wi (file:///C:/Users/PC/Desktop/EcoRacer/ecoer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjpp/node_modules/tailwindcss/dist/chunk-CT46QCH7.s:3:1718)
-    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecorace at async Za (file:///C:/Users/PC/Desktop/EcoRacr-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjsacer-app/node_modules/tailwindcss/dist/chunk-CT4:3:1377)
-    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecorac at async rf (file:///C:/Users/PC/Desktop/EcoRacer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjacer-app/node_modules/tailwindcss/dist/chunk-CT4    at br (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:1718)
-    at I (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:3:1377)
-    at Ae (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:21:172)
-    at Wi (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:38:294)
-    at async Za (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:38:631)
-    at async rf (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/tailwindcss/dist/chunk-CT46QCH7.mjs:38:1406)
-    at async lu (file:///C:/Users/PC/Desktop/EcoRacer/ecoracer-app/node_modules/@tailwindcss/node/dist/index.mjs:10:3458)
-PS C:\Users\PC\Desktop\EcoRacer\ecoracer-app>      
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
